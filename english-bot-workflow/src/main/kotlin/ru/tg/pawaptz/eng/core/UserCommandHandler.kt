@@ -31,6 +31,7 @@ class UserCommandHandler(
             val receiveChannel = tgBot.subscribe()
             while (isActive) {
                 val upd = receiveChannel.receive()
+                log.debug("Received an update: $upd")
                 if (upd.isCommand()) {
                     log.info("Received an update $upd")
                     commandRegistry.handleCommand(
@@ -40,6 +41,7 @@ class UserCommandHandler(
                     )
                 }
             }
+            log.warn("Stop listening to the users commands")
         }
     }
 

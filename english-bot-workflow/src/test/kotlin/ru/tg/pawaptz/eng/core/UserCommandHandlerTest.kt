@@ -1,10 +1,7 @@
 package ru.tg.pawaptz.eng.core
 
-import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -30,7 +27,7 @@ internal class UserCommandHandlerTest {
 
     private val console: InteractiveConsole = mockk()
     private val tgBot: TgBot = mockk()
-    private val registry = UserCommandRegistry()
+    private val registry = UserCommandRegistry
     private val handler = UserCommandHandler(tgBot, console, registry)
     private val broadcastChannel = BroadcastChannel<TgUpdate>(Channel.BUFFERED)
     private val receiveChannel = broadcastChannel.openSubscription()
@@ -58,6 +55,6 @@ internal class UserCommandHandlerTest {
             )
         )
 
-        verify(timeout = 300) { console.sendMainMenu(TgChatId(1001)) }
+        coVerify(timeout = 300) { console.sendMainMenu(TgChatId(1001)) }
     }
 }
