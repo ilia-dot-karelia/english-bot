@@ -32,6 +32,4 @@ class InteractiveConsoleImpl(
         }
         log.debug("Sent message to chat $chat, message returned: $sentMessage")
     }
-
-
 }

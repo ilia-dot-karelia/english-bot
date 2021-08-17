@@ -43,16 +43,4 @@ class InteractiveConsoleImplTest {
         coVerify { bot.sendMessage(chatId, TgText(any()), any()) }
         confirmVerified(bot)
     }
-
-    @Test
-    fun whenSentMainMenuThenSubscribeToCallBackMessages() = runBlocking {
-        val chatId = TgChatId(123)
-        coEvery { bot.sendMessage(TgChatId(any()), TgText(any()), any()) } returns anyMessage()
-        coEvery { updateSelector.register(any(), any()) } returns Unit
-        console.sendMainMenu(chatId)
-
-        coVerify { updateSelector.register(any(), any()) }
-
-        confirmVerified(updateSelector)
-    }
 }

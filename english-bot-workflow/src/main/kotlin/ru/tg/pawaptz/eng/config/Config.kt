@@ -33,9 +33,14 @@ class Config {
         return InteractiveConsoleImpl(tgBot)
     }
 
+    @Bean
+    fun userCommandHandler(messageReactor: MessageReactor, userConsole: InteractiveConsole): UserCommandHandler {
+        return UserCommandHandler(messageReactor, userConsole, UserCommandRegistry)
+    }
+
     @Bean(initMethod = "start", destroyMethod = "stop")
-    fun userCommandHandler(tgBot: TgBot, userConsole: InteractiveConsole): UserCommandHandler {
-        return UserCommandHandler(tgBot, userConsole, UserCommandRegistry)
+    fun messageReactor(tgBot: TgBot) : MessageReactor {
+        return MessageReactorImpl(tgBot)
     }
 
     @Bean

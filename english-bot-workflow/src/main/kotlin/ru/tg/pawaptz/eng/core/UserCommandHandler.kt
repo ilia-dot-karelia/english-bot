@@ -1,13 +1,15 @@
 package ru.tg.pawaptz.eng.core
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
-import ru.tg.api.generic.TgBot
+import ru.tg.pawaptz.eng.messaging.MessageReactor
 import java.util.concurrent.CancellationException
 
 @ExperimentalCoroutinesApi
 class UserCommandHandler(
-    private val tgBot: TgBot,
+    private val messageReactor: MessageReactor,
     private val console: InteractiveConsole,
     private val commandRegistry: CommandRegistry
 ) {
@@ -25,23 +27,13 @@ class UserCommandHandler(
 
     private lateinit var job: Job
 
-    fun start() {
-        job = CoroutineScope(Dispatchers.Default).launch {
-            log.info("Start listening to the users commands")
-            val receiveChannel = tgBot.subscribe()
-            while (isActive) {
-                val upd = receiveChannel.receive()
-                log.debug("Received an update: $upd")
-                if (upd.isCommand()) {
-                    log.info("Received an update $upd")
-                    commandRegistry.handleCommand(
-                        CommandContext(
-                            upd.user(), upd.command(), upd.chatId()
-                        )
-                    )
-                }
-            }
-            log.warn("Stop listening to the users commands")
+    fun init() = runBlocking {
+        messageReactor.register({ it.isCommand() }) {
+            commandRegistry.handleCommand(
+                CommandContext(
+                    it.user(), it.command(), it.chatId()
+                )
+            )
         }
     }
 
