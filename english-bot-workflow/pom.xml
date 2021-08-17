@@ -17,8 +17,8 @@
     <properties>
         <java.version>11</java.version>
         <kotlin.version>1.5.21</kotlin.version>
-        <ver.telegram>0.0.3-SNAPSHOT</ver.telegram>
-        <ver.mockk>1.11.0</ver.mockk>
+        <ver.telegram>0.0.4-SNAPSHOT</ver.telegram>
+        <ver.mockk>1.12.0</ver.mockk>
         <ver.okhttp>4.9.1</ver.okhttp>
     </properties>
 
@@ -30,6 +30,10 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-slf4j</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -66,6 +70,12 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>${ver.okhttp}</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.tg.pawaptz</groupId>
+            <artifactId>telegram-bot-kotlin-test</artifactId>
+            <version>${ver.telegram}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

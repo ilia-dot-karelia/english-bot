@@ -1,6 +1,7 @@
 package ru.tg.pawaptz.eng.core
 
 import ru.tg.api.inlined.TgChatId
+import ru.tg.api.inlined.TgMessageId
 import ru.tg.api.transport.TgUpdate
 import ru.tg.api.transport.TgUser
 
@@ -18,4 +19,8 @@ fun TgUpdate.command(): Command {
 
 fun TgUpdate.isCommand() : Boolean {
     return this.message?.text?.startsWith("/") == true
+}
+
+fun TgUpdate.isCallBack(idExpected: TgMessageId) : Boolean {
+    return (this.callbackQuery?.message?.msgId ?: Long.MIN_VALUE) != idExpected
 }
